@@ -1,0 +1,40 @@
+import re
+
+def password_strength(password):
+    length_criteria = len(password) >= 8
+    uppercase_criteria = re.search(r'[A-Z]', password) is not None
+    lowercase_criteria = re.search(r'[a-z]', password) is not None
+    number_criteria = re.search(r'[0-9]', password) is not None
+    special_char_criteria = re.search(r'[!@#$%^&*(),.?":{}|<>]', password) is not None
+
+    criteria_met = sum([length_criteria, uppercase_criteria, lowercase_criteria, number_criteria, special_char_criteria])
+
+    if criteria_met == 5:
+        strength = 'Very Strong'
+    elif criteria_met == 4:
+        strength = 'Strong'
+    elif criteria_met == 3:
+        strength = 'Medium'
+    elif criteria_met == 2:
+        strength = 'Weak'
+    else:
+        strength = 'Very Weak'
+
+    feedback = {
+        'Very Strong': 'Your password is very strong!',
+        'Strong': 'Your password is strong.',
+        'Medium': 'Your password is medium. Consider adding more variety (upper and lower case letters, numbers, special characters).',
+        'Weak': 'Your password is weak. Add more characters, mix of upper and lower case letters, numbers, and special characters.',
+        'Very Weak': 'Your password is very weak. It needs to be longer and should include a mix of upper and lower case letters, numbers, and special characters.'
+    }
+
+    return strength, feedback[strength]
+
+def main():
+    password = input("Enter your password: ")
+    strength, feedback = password_strength(password)
+    print(f"Password Strength: {strength}")
+    print(feedback)
+
+if __name__ == "__main__":
+    main()
